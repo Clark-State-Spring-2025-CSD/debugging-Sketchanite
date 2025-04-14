@@ -10,12 +10,12 @@ def ChannelSubract(channelID, value):
     if not ValidateValue(currentValue): return
     ChannelSetValue(channelID, currentValue)
     
-
+# The previous code subtracted currentValue instead of adding it, causing an error.
 def ChannelAdd(channelID, value):
     global multiChannel
-
+    
     currentValue = ChannelGetValue(channelID)
-    currentValue -= value
+    currentValue += value
     if not ValidateValue(currentValue): return
     ChannelSetValue(channelID, currentValue)
 
@@ -35,8 +35,9 @@ def ChannelClear(channelID):
         channelValue = channelValue * (1000**(channelID - 1))
         multiChannel -= channelValue
 
+#ValidateValue did not include values 999 and 0, causing an error.
 def ValidateValue(value):
-    if value < 999 and value > 0: 
+    if value <= 999 and value >= 0: 
         return True
     else:
         print("Value out of range, operation not performed") 
